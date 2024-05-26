@@ -1,0 +1,27 @@
+syntax = "proto3";
+option go_package = "github.com/wyy-go/wzo/examples/proto/greeter";
+
+package proto.greeter;
+
+import "google/api/annotations.proto";
+import "gogoproto/gogo.proto";
+import "protoc-gen-openapiv2/options/annotations.proto";
+
+service Greeter {
+  rpc SayHello(HelloRequest) returns (HelloReply) {
+    option (google.api.http) = {
+      get : "/hello/{name}"
+    };
+
+    option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_operation) = {
+      summary: "欢迎";
+      tags: "测试模块";
+    };
+  }
+}
+
+message HelloRequest {
+  string name = 1 [ (gogoproto.moretags) = 'uri:"name"' ];
+}
+
+message HelloReply { string message = 1; }

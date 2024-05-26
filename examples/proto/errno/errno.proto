@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package errno;
+
+option go_package = "github.com/wyy-go/wzo/examples/errno";
+option java_multiple_files = true;
+option java_package = "io.grpc.wyy-go.wzo.examples.errno";
+option java_outer_classname = "HelloWorldProto";
+
+// #[errno]
+enum ErrorReason {
+  // 服务器错误
+  // #[errno(code=500)]
+  internal_server = 0;
+  // 请求参数错误
+  // #[errno(code=400)]
+  bad_request = 1;
+  // 操作超时
+  timeout = 1000;
+  // 自定义错误
+  custom= 1001;
+  // 业务错误
+  biz_error= 1002;
+  // 用户名或密码错误
+  user_or_password_incorrect = 1003;
+}
