@@ -9,25 +9,14 @@ import (
 
 const version = "0.0.1"
 
-var args = &struct {
-	ShowVersion   bool   // version
-	ErrorsPackage string // error package
-}{
-
-	ShowVersion:   false,
-	ErrorsPackage: "",
-}
-
-func init() {
-	flag.BoolVar(&args.ShowVersion, "version", false, "print the version and exit")
-	flag.StringVar(&args.ErrorsPackage, "epk", "github.com/wyy-go/wzo/core/errors", "errors core package in your project")
-}
+var showVersion = flag.Bool("version", false, "print the version and exit")
 
 func main() {
 	flag.Parse()
-	if args.ShowVersion {
+	if *showVersion {
 		fmt.Printf("protoc-gen-wzo-errno %v\n", version)
 		return
 	}
-	protogen.Options{ParamFunc: flag.CommandLine.Set}.Run(runProtoGen)
+
+	protogen.Options{ParamFunc: flag.CommandLine.Set}.Run(run)
 }

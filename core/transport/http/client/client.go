@@ -94,53 +94,6 @@ func (c *Client) CallSetting(path string, cos ...CallOption) *CallSettings {
 	return cs
 }
 
-// Invoke2 the request
-// NOTE: Do not use this function. use Execute instead.
-func (c *Client) Invoke2(ctx context.Context, method, path string, in, out any, settings *CallSettings) error {
-	if c.validate != nil {
-		err := c.validate(in)
-		if err != nil {
-			return err
-		}
-	}
-	ctx = WithValueCallOption(ctx, settings)
-	r := c.cc.R().SetContext(ctx)
-	if in != nil {
-		reqBody, err := c.codec.Encode(settings.contentType, in)
-		if err != nil {
-			return err
-		}
-		r = r.SetBody(reqBody)
-	}
-	if !settings.noAuth {
-		if c.tokenSource == nil {
-			return errors.Parse("transport: token source should be not nil")
-		}
-		tk, err := c.tokenSource.Token()
-		if err != nil {
-			return err
-		}
-		r.SetHeader("Authorization", tk.Type()+" "+tk.AccessToken)
-	}
-	r.SetHeader("Content-Type", settings.contentType)
-	r.SetHeader("Accept", settings.accept)
-	for k, vs := range settings.header {
-		for _, v := range vs {
-			r.Header.Add(k, v)
-		}
-	}
-
-	resp, err := r.Execute(method, c.cc.BaseURL+path)
-	if err != nil {
-		return err
-	}
-	if resp.IsError() {
-		return errors.Parse(string(resp.Body()))
-	}
-	defer resp.RawResponse.Body.Close()
-	return c.codec.InboundForResponse(resp.RawResponse).NewDecoder(resp.RawResponse.Body).Decode(out)
-}
-
 // Invoke the request
 // NOTE: Do not use this function. use Execute instead.
 func (c *Client) Invoke(ctx context.Context, method, path string, in, out any, settings *CallSettings) error {

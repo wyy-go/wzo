@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/wyy-go/wzo/carry"
-	"github.com/wyy-go/wzo/core/errors"
 	"github.com/wyy-go/wzo/core/transport/http/server/middleware/error_response"
 
 	"github.com/gin-gonic/gin"
@@ -76,9 +75,9 @@ func (s *GreeterImpl) SayHello(ctx context.Context, req *errapi.HelloRequest) (*
 
 func (s *GreeterImpl) TestError(ctx context.Context, req *errapi.ErrorRequest) (*errapi.ErrorReply, error) {
 	if req.Name == "internal" {
-		return nil, errno.ErrInternalServer(errors.WithDetail("服务器错误详请"))
+		return nil, errno.ErrInternalServerw(errno.WithDetail("服务器错误详请"))
 	} else if req.Name == "bad" {
-		return nil, errno.ErrBadRequest(errors.WithDetail("请求参数错误详请"))
+		return nil, errno.ErrInternalServerw(errno.WithDetail("请求参数错误详请"))
 	} else if req.Name == "biz" {
 		return nil, errno.ErrBizError()
 	}
