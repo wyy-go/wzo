@@ -6,7 +6,7 @@ require (
 	github.com/bytedance/sonic v1.11.6
 	github.com/fsnotify/fsnotify v1.7.0
 	github.com/gin-contrib/cors v1.7.2
-	github.com/gin-gonic/gin v1.9.1
+	github.com/gin-gonic/gin v1.10.0
 	github.com/go-playground/form/v4 v4.2.1
 	github.com/go-playground/validator/v10 v10.20.0
 	github.com/go-resty/resty/v2 v2.12.0
@@ -135,7 +135,7 @@ require (
 	go.etcd.io/etcd/client/v2 v2.305.10 // indirect
 	go.opentelemetry.io/otel/metric v1.27.0 // indirect
 	go.uber.org/mock v0.4.0 // indirect
-	golang.org/x/arch v0.7.0 // indirect
+	golang.org/x/arch v0.8.0 // indirect
 	golang.org/x/crypto v0.23.0 // indirect
 	golang.org/x/exp v0.0.0-20230905200255-921286631fa9 // indirect
 	golang.org/x/mod v0.17.0 // indirect
